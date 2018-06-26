@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Simple Interface to jArgSemSATWeb</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+
+
+</head>
+
+<body>
+    <form id="form">
+		<textarea id="AF" cols="40" rows="5">{"arguments":["a","b"],
+"attacks":["(a,b)"],
+"semantics":"stable"}</textarea>
+		<br/>
+        <input class="submit" type="submit" id="submit" value="Compute" />
+    </form>
+
+    <script type="text/javascript">
+		$(document).ready(function () {
+		    $("#form").submit(function (e) {
+		        e.preventDefault();
+		        $.ajax({
+		            type: 'POST',
+		            url: 'http://cicero.cs.cf.ac.uk/jArgSemSATWeb/restapi/argtech/',
+			    processData: false,
+    			    contentType: 'application/json',
+		            data: $("#AF").val(),
+		            success: function (data) {
+		                $('#results').html(data);
+		                //$('#submit').hide();
+		            }
+		        });
+		    });
+		});
+
+		$(function ()
+		{
+    			$(document).on("keydown", "#AF", function(e)
+    			{
+        			if ((e.ctrlKey || e.metaKey) && (e.keyCode == 13 || e.keyCode == 10))
+        			{
+            				$("#submit").click();
+        			}
+    			});
+		});
+    </script>
+
+    <div id="results"></div>
+
+
+    <div>
+      <p>For further details, see <a href="https://github.com/federicocerutti/jArgSemSAT">https://github.com/federicocerutti/jArgSemSAT</a>
+
+      <p>References:<p>
+        <ul>
+          <li><a href="https://www.worldscientific.com/doi/abs/10.1142/S0218213017500026">An Efficient Java-Based Solver for Abstract Argumentation Frameworks: jArgSemSAT</a></li>
+          <li><a href="http://orca.cf.ac.uk/88071/">jArgSemSAT: an efficient off-the-shelf solver for abstract argumentation frameworks</a></li>
+          <li><a href="http://orca.cf.ac.uk/92463/">Efficient and off-the-shelf solver: jArgSemSAT</a></li>
+        </ul>
+    </div>
+
+</body>
